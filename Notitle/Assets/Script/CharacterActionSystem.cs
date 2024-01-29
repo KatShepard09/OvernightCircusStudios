@@ -31,7 +31,18 @@ public class CharacterActionSystem : MonoBehaviour
         if (Input.GetMouseButtonDown(0))//charcter moves to location of where the mouse was clicked
         {
             if (HandleCharacterSelection()) return;
-            selectedUnit.Move(MouseWorld.GetPosition());
+
+            GridPostion mouseGridPostion = LevelGrid.Instance.GetGridPostion(MouseWorld.GetPosition());
+           if(selectedUnit.GetMoveAction().IsValidActionGridPostion(mouseGridPostion))
+            {
+                selectedUnit.GetMoveAction().Move(mouseGridPostion);
+            }
+           
+        }
+
+        if(Input.GetMouseButtonDown(1))
+        {
+            selectedUnit.GetSpinAction().Spin();
         }
     }
 
