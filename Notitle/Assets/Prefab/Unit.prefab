@@ -177,6 +177,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1c9218a93e9d9be4c9ff7da6c3f55f4b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isEnemy: 0
 --- !u!65 &1866249849825525555
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -253,8 +254,8 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0.01, z: 0}
-  m_LocalScale: {x: 3, y: 2.2136953, z: 2.2136953}
-  m_ConstrainProportionsScale: 1
+  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6155487713900167370}
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
@@ -286,7 +287,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 7d1be79678ab68d439ff9d3e719790fc, type: 2}
+  - {fileID: 2100000, guid: 63f830a928b4001469764f72e73ee4ff, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

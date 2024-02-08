@@ -64,4 +64,14 @@ public class GridSystem
     {
         return gridPostion.x >= 0 && gridPostion.z >= 0 && gridPostion.x < width && gridPostion.z < height;
     }
+
+    public int GetWidth()
+    {
+        return width;
+    }
+
+    public int GetHeight() 
+    {
+        return height;
+    }
 }

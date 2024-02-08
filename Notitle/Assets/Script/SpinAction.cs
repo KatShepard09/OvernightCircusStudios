@@ -1,11 +1,13 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SpinAction : MonoBehaviour
+public class SpinAction : BaseAction
 {
+ 
     private float totalSpinAmount;
-    private bool isActive;
+   
 
     private void Update()
     {
@@ -21,12 +23,36 @@ public class SpinAction : MonoBehaviour
         if (totalSpinAmount >= 360)
         {
             isActive = false;
+            onActionComplete();
         }
     }
 
-    public void Spin()
+    public override void TakeAction(GridPostion gridPostion, Action onActionComplete)
     {
+        this.onActionComplete = onActionComplete;
         isActive = true;
         totalSpinAmount = 0f;
     }
+
+    public override string GetActionName()
+    {
+        return "spin";
+    }
+
+    public override List<GridPostion> GetValidActionGridPostionList()
+    {
+      
+        GridPostion unitGridPostion = unit.GetGridPostion();
+
+        return new List<GridPostion>
+        {
+            unitGridPostion
+        };
+    }
+
+    public override int GetActionCost()
+    {
+        return 2;//spin action cost two points.
+    }
+  
 }

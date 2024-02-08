@@ -25,7 +25,7 @@ public class CharacterSelectVisual : MonoBehaviour
         UpdateVisual();
     }
 
-    private void UpdateVisual()
+    private void UpdateVisual()//loads the select icon so the player knows who they are controlling.
     {
 
         if (CharacterActionSystem.Instance.GetSelectedUnit() == unit)

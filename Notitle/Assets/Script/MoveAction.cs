@@ -1,20 +1,20 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MoveAction : MonoBehaviour
+public class MoveAction : BaseAction
 {
 
     [SerializeField] private Animator unitAnimator;
     [SerializeField] private int maxMoveDistance = 4;
 
     private Vector3 targetPosition;
-    private Unit unit;
-    private bool isActive;
+   
 
-    private void Awake()
+    protected override void Awake()
     {
-        unit = GetComponent<Unit>();
+        base.Awake();
         targetPosition = transform.position;
     }
 
@@ -40,24 +40,22 @@ public class MoveAction : MonoBehaviour
         {
             unitAnimator.SetBool("IsWalking", false);// when character is not moving it activates the idle animation.
             isActive = false;
+            onActionComplete();
         }
         float rotateSpeed = 10f;
         transform.forward = Vector3.Lerp(transform.forward, moveDirection, Time.deltaTime * rotateSpeed);//rotates charcter based on direction that they are moveing
     }
 
-    public void Move(GridPostion gridPostion)
+    public override void TakeAction(GridPostion gridPostion, Action onActionComplete)
     {
+        this.onActionComplete = onActionComplete;
         this.targetPosition = LevelGrid.Instance.GetWorldPostion(gridPostion);
         isActive = true;
     }
 
-    public bool IsValidActionGridPostion(GridPostion gridPostion)
-    {
-        List<GridPostion> validGridPostionList = GetValidActionGridPostionList();
-        return validGridPostionList.Contains(gridPostion);
-    }
+   
 
-    public List<GridPostion> GetValidActionGridPostionList()
+    public override List<GridPostion> GetValidActionGridPostionList()
     {
         List<GridPostion> validGridPostionList = new List<GridPostion>();
 
@@ -92,5 +90,10 @@ public class MoveAction : MonoBehaviour
         }
 
         return validGridPostionList;
+    }
+
+    public override string GetActionName()
+    {
+        return "Move";
     }
 }
