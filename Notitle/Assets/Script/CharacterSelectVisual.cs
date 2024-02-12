@@ -37,4 +37,9 @@ public class CharacterSelectVisual : MonoBehaviour
             meshRenderer.enabled = false;
         }
     }
+
+    private void OnDestroy()
+    {
+        CharacterActionSystem.Instance.OnSelectedCharacterChanged -= CharacterActionSystem_OnSelectedCharacterChanged;
+    }
 }

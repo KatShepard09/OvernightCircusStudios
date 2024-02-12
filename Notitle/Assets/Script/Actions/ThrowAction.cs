@@ -14,7 +14,9 @@ public class ThrowAction : BaseAction
         Cooloff,
     }
 
-   private State state;
+    public event EventHandler OnThrow;
+  
+    private State state;
     private int maxThrowDistance = 4;//how far the unit can throw.
     private float stateTimer;
     private Unit targetUnit;
@@ -79,6 +81,8 @@ public class ThrowAction : BaseAction
                 if (stateTimer <= 0)
                 {
                     isActive = false;
+
+                    
                     ActionComplete();
                 }
                 break;
@@ -88,7 +92,8 @@ public class ThrowAction : BaseAction
 
     private void Throw()
     {
-        targetUnit.Damage();
+        OnThrow?.Invoke(this, EventArgs.Empty);
+        targetUnit.Damage(40);
     }
     public override string GetActionName()//creates Throw button.
     {
@@ -149,6 +154,8 @@ public class ThrowAction : BaseAction
         targetUnit = LevelGrid.Instance.GetUnitAtGridPostion(gridPostion);
 
         canThrowObject = true;
+
+       
     }
 
    

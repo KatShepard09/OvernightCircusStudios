@@ -72,18 +72,22 @@ public class CharacterActionSystem : MonoBehaviour
         {
             GridPostion mouseGridPostion = LevelGrid.Instance.GetGridPostion(MouseWorld.GetPosition());
 
-            if(selectedAction.IsValidActionGridPostion(mouseGridPostion))
+            if(!selectedAction.IsValidActionGridPostion(mouseGridPostion))
             {
-                if(selectedUnit.TrySpendActionPointsToTakeAction(selectedAction))
-                {
-                    SetBusy();
-                    selectedAction.TakeAction(mouseGridPostion, ClearBusy);
 
-                    OnActionStarted?.Invoke(this, EventArgs.Empty);
-                }
-                
+                return;
             }
+            if (!selectedUnit.TrySpendActionPointsToTakeAction(selectedAction))
+            {
+                return;
+            }
+            SetBusy();
+            selectedAction.TakeAction(mouseGridPostion, ClearBusy);
+
+            OnActionStarted?.Invoke(this, EventArgs.Empty);
         }
+
+
     }
 
     private void SetBusy()
