@@ -62,6 +62,11 @@ public class Unit : MonoBehaviour
         return gridPostion;
     }
 
+    public Vector3 GetWorldPostion()
+    {
+        return transform.position;
+    }
+
     public BaseAction[] GetBaseActionArray()
     { 
         return baseActionArray; 
@@ -117,5 +122,10 @@ public class Unit : MonoBehaviour
     public bool IsEnemy()//checks to see if it is an enemy.
     {
         return isEnemy;
+    }
+
+    public void Damage()
+    {
+        Debug.Log(transform + " damaged!");
     }
 }

@@ -39,8 +39,7 @@ public class MoveAction : BaseAction
         else
         {
             unitAnimator.SetBool("IsWalking", false);// when character is not moving it activates the idle animation.
-            isActive = false;
-            onActionComplete();
+            ActionComplete();
         }
         float rotateSpeed = 10f;
         transform.forward = Vector3.Lerp(transform.forward, moveDirection, Time.deltaTime * rotateSpeed);//rotates charcter based on direction that they are moveing
@@ -48,9 +47,10 @@ public class MoveAction : BaseAction
 
     public override void TakeAction(GridPostion gridPostion, Action onActionComplete)
     {
-        this.onActionComplete = onActionComplete;
+        ActionStart(onActionComplete);
+       
         this.targetPosition = LevelGrid.Instance.GetWorldPostion(gridPostion);
-        isActive = true;
+       
     }
 
    

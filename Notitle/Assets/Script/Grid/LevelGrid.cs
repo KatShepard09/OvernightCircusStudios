@@ -77,7 +77,7 @@ public class LevelGrid : MonoBehaviour
 
     private void Update()
     {
-        Debug.Log(gridSystem.GetGridPostion(MouseWorld.GetPosition()));
+       
     }
 
 }
