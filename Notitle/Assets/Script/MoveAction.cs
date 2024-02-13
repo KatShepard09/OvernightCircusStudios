@@ -6,7 +6,8 @@ using UnityEngine;
 public class MoveAction : BaseAction
 {
 
-    [SerializeField] private Animator unitAnimator;
+    public event EventHandler OnStartMoving;
+    public event EventHandler OnStopMoving;
     [SerializeField] private int maxMoveDistance = 4;
 
     private Vector3 targetPosition;
@@ -34,13 +35,14 @@ public class MoveAction : BaseAction
             transform.position += moveDirection * moveSpeed * Time.deltaTime;//keeps track of player movment and the amount of frames at which it moves.
 
 
-            unitAnimator.SetBool("IsWalking", true);//when charcter moves it activates the move animation.
+            
         }
         else
         {
-            unitAnimator.SetBool("IsWalking", false);// when character is not moving it activates the idle animation.
-            isActive = false;
-            onActionComplete();
+            
+
+            OnStopMoving?.Invoke(this, EventArgs.Empty);
+            ActionComplete();
         }
         float rotateSpeed = 10f;
         transform.forward = Vector3.Lerp(transform.forward, moveDirection, Time.deltaTime * rotateSpeed);//rotates charcter based on direction that they are moveing
@@ -48,9 +50,12 @@ public class MoveAction : BaseAction
 
     public override void TakeAction(GridPostion gridPostion, Action onActionComplete)
     {
-        this.onActionComplete = onActionComplete;
+        ActionStart(onActionComplete);
+       
         this.targetPosition = LevelGrid.Instance.GetWorldPostion(gridPostion);
-        isActive = true;
+
+        OnStartMoving?.Invoke(this, EventArgs.Empty);
+       
     }
 
    

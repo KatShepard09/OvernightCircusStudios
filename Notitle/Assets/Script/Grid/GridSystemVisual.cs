@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -34,12 +35,16 @@ public class GridSystemVisual : MonoBehaviour
                 gridSystemVisualSingleArray[x, z] = gridSystemVisualSingleTransform.GetComponent<GridSystemVisualSingle>();
             }
         }
-    }
 
+       
+
+        
+    }
     private void Update()
     {
         UpdatGridVisual();
     }
+
 
     public void HideAllGridPostion()//hides grid location that are not currently selectable
     {
@@ -69,4 +74,6 @@ public class GridSystemVisual : MonoBehaviour
         BaseAction selectedAction = CharacterActionSystem.Instance.GetSelectedAction();
         ShowGridPostionList (selectedAction.GetValidActionGridPostionList());
     }
+
+  
 }

@@ -2,12 +2,25 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class ThrowAction : BaseAction
 {
 
-    private float totalSpinAmount;
-    private int maxThrowDistance = 4;
+    private enum State
+    {
+        Aiming,
+        Throwing,
+        Cooloff,
+    }
+
+    public event EventHandler OnThrow;
+  
+    private State state;
+    private int maxThrowDistance = 4;//how far the unit can throw.
+    private float stateTimer;
+    private Unit targetUnit;
+    private bool canThrowObject;
 
     private void Update()
     {
@@ -15,18 +28,74 @@ public class ThrowAction : BaseAction
         {
             return;
         }
+        stateTimer -= Time.deltaTime;
 
-        float spinAddAmount = 360f * Time.deltaTime;
-        transform.eulerAngles += new Vector3(0, spinAddAmount, 0);
-
-        totalSpinAmount += spinAddAmount;
-        if (totalSpinAmount >= 360)
+        switch(state)
         {
-            isActive = false;
-            onActionComplete();
+            case State.Aiming:
+                Vector3 aimDir = (targetUnit.GetWorldPostion() - unit.GetWorldPostion()).normalized;
+                float rotateSpeed = 10f;
+                transform.forward = Vector3.Lerp(transform.forward, aimDir, Time.deltaTime * rotateSpeed);
+                break;
+            case State.Throwing:
+               if (canThrowObject)
+                {
+                    Throw();
+                    canThrowObject = false;
+                }
+                break;
+            case State.Cooloff:
+               
+                break;
+
+        }
+
+        if(stateTimer <= 0f)
+        {
+            NextState();
+        }
+
+    }
+
+    private void NextState()
+    {
+        switch (state)//slows down combat into three phases of an attack.
+        {
+            case State.Aiming:
+                if (stateTimer <= 0)
+                {
+                    state = State.Throwing;
+                    float throwingStateTime = 0.1f;
+                    stateTimer = throwingStateTime;
+                }
+                break;
+            case State.Throwing:
+                if (stateTimer <= 0)
+                {
+                    state = State.Cooloff;
+                    float coolOffStateTime = 0.5f;
+                    stateTimer = coolOffStateTime;
+                }
+                break;
+            case State.Cooloff:
+                if (stateTimer <= 0)
+                {
+                    isActive = false;
+
+                    
+                    ActionComplete();
+                }
+                break;
+
         }
     }
-    public override string GetActionName()
+
+    private void Throw()
+    {
+        OnThrow?.Invoke(this, EventArgs.Empty);
+        targetUnit.Damage(40);
+    }
+    public override string GetActionName()//creates Throw button.
     {
         return "Throw";
     }
@@ -75,9 +144,18 @@ public class ThrowAction : BaseAction
 
     public override void TakeAction(GridPostion gridPostion, Action onActionComplete)
     {
-        this.onActionComplete = onActionComplete;
-        isActive = true;
-        totalSpinAmount = 0f;
+        ActionStart(onActionComplete);
+
+        state = State.Aiming;
+        float aimingStateTime = 1f;
+        stateTimer = aimingStateTime;
+
+
+        targetUnit = LevelGrid.Instance.GetUnitAtGridPostion(gridPostion);
+
+        canThrowObject = true;
+
+       
     }
 
    

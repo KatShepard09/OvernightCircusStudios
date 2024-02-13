@@ -31,4 +31,16 @@ public abstract class BaseAction : MonoBehaviour//this script tells the game whi
     {
         return 1;//move action cost 1 action point.
     }
+
+    protected void ActionStart(Action onActionComplete)//this tells each action if it is active if so do the action.
+    {
+        isActive = true;
+        this.onActionComplete = onActionComplete;
+    }
+
+    protected void ActionComplete()//this tells each action that once it completes what it is suppose to do to stop doing it.
+    {
+        isActive = false;
+        onActionComplete();
+    }
 }
