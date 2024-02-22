@@ -93,24 +93,43 @@ public class EnemyAI : MonoBehaviour
 
     private bool TryTakeEnemyAIAction(Unit enemyUnit, Action onEnemyAIActionComplete)//checks for vaild grid postions for an action then sees if they have action points for said action.
     {
-        SpinAction spinAction = enemyUnit.GetSpinAction();
+        EnemyAIAction bestEnemyAIAction = null;
+        BaseAction bestBaseAction = null;
 
-        GridPostion actionGridPostion = enemyUnit.GetGridPostion();
-
-        if (!spinAction.IsValidActionGridPostion(actionGridPostion))
+        foreach (BaseAction baseAction in enemyUnit.GetBaseActionArray())
         {
-            return false;
-           
+            if (!enemyUnit.CanSpendActionPointsToTakeAction(baseAction))//checks if the enemy has action points to spend
+            {
+                continue;
+            }
+            if (bestEnemyAIAction == null)//if the enemy does have action points it will choose the best action avalible to it.
+            {
+                bestEnemyAIAction = baseAction.GetBestEnemyAIAction();
+                bestBaseAction = baseAction;
+            }
+            else
+            {
+                EnemyAIAction testEnemyAIAction = baseAction.GetBestEnemyAIAction();
+                if (testEnemyAIAction != null && testEnemyAIAction.actionValue > bestEnemyAIAction.actionValue)
+                {
+                    bestEnemyAIAction = testEnemyAIAction;
+                    bestBaseAction = baseAction;
+                }
+            }
 
         }
-        if (!enemyUnit.TrySpendActionPointsToTakeAction(spinAction))
+
+        if (bestEnemyAIAction != null && enemyUnit.TrySpendActionPointsToTakeAction(bestBaseAction))
+        {
+            bestBaseAction.TakeAction(bestEnemyAIAction.gridPostion, onEnemyAIActionComplete);
+            return true;
+        }
+        else
         {
             return false;
-
-
         }
-       
-        spinAction.TakeAction(actionGridPostion, onEnemyAIActionComplete);
-        return true;
+
+
+
     }
 }

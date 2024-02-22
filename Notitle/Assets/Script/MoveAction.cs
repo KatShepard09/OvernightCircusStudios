@@ -101,4 +101,16 @@ public class MoveAction : BaseAction
     {
         return "Move";
     }
+
+    public override EnemyAIAction GetEnemyAIAction(GridPostion gridPostion)
+    {
+        int targetCountAtGridPosition = unit.GetThrowAction().GetTargetCountAtTargetPostion(gridPostion);
+        return new EnemyAIAction
+        {
+            gridPostion = gridPostion,
+            actionValue = targetCountAtGridPosition * 10,// this tells the AI to move to where there is a bigger group to attack.
+        };
+    }
+
+   
 }

@@ -52,5 +52,14 @@ public class SpinAction : BaseAction
     {
         return 2;//spin action cost two points.
     }
-  
+
+    public override EnemyAIAction GetEnemyAIAction(GridPostion gridPostion)
+    {
+        return new EnemyAIAction
+        {
+            gridPostion = gridPostion,
+            actionValue = 0,
+        };
+    }
+
 }

@@ -43,4 +43,31 @@ public abstract class BaseAction : MonoBehaviour//this script tells the game whi
         isActive = false;
         onActionComplete();
     }
+
+    public EnemyAIAction GetBestEnemyAIAction()
+    {
+        List<EnemyAIAction> enemyAIActionsList = new List<EnemyAIAction>();
+
+        List<GridPostion> validActionGridPostionList = GetValidActionGridPostionList();
+
+        foreach(GridPostion gridPostion in validActionGridPostionList)
+        {
+            EnemyAIAction enemyAIAction = GetEnemyAIAction(gridPostion);
+            enemyAIActionsList.Add(enemyAIAction);
+        }
+
+        if(enemyAIActionsList.Count > 0)
+        {
+            enemyAIActionsList.Sort((EnemyAIAction a, EnemyAIAction b) => b.actionValue - a.actionValue);
+            return enemyAIActionsList[0];
+        }
+        else
+        {
+            return null;//no AI actions to take.
+        }
+
+        
+    }
+
+    public abstract EnemyAIAction GetEnemyAIAction(GridPostion gridPostion);
 }
