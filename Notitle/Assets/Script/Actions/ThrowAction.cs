@@ -99,12 +99,17 @@ public class ThrowAction : BaseAction
     {
         return "Throw";
     }
-
     public override List<GridPostion> GetValidActionGridPostionList()
+    {
+        GridPostion unitGridPostion = unit.GetGridPostion();
+        return GetValidActionGridPostionList(unitGridPostion);
+    }
+
+    public  List<GridPostion> GetValidActionGridPostionList(GridPostion unitGridPostion)
     {
         List<GridPostion> validGridPostionList = new List<GridPostion>();
 
-        GridPostion unitGridPostion = unit.GetGridPostion();
+       
 
         for (int x = -maxThrowDistance; x <= maxThrowDistance; x++)
         {
@@ -158,5 +163,19 @@ public class ThrowAction : BaseAction
        
     }
 
-   
+    public override EnemyAIAction GetEnemyAIAction(GridPostion gridPostion)
+    {
+       
+
+        return new EnemyAIAction
+        {
+            gridPostion = gridPostion,
+            actionValue = 100,
+        };
+    }
+
+    public int GetTargetCountAtTargetPostion(GridPostion gridPostion)
+    {
+        return GetValidActionGridPostionList(gridPostion).Count;
+    }
 }

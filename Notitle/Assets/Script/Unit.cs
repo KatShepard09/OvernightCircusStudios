@@ -18,6 +18,7 @@ public class Unit : MonoBehaviour
     private HealthSystem healthSystem;
     private MoveAction moveAction;
     private SpinAction spinAction;
+    private ThrowAction throwAction;
     private BaseAction[] baseActionArray;
     private int actionPoints = ACTION_POINTS_MAX;//starting action points.
     private void Awake()
@@ -25,6 +26,7 @@ public class Unit : MonoBehaviour
         healthSystem = GetComponent<HealthSystem>();
         moveAction = GetComponent<MoveAction>();
         spinAction = GetComponent<SpinAction>();
+        throwAction = GetComponent<ThrowAction>();
         baseActionArray = GetComponents<BaseAction>();
     }
 
@@ -63,6 +65,11 @@ public class Unit : MonoBehaviour
     public SpinAction GetSpinAction()
     {
         return spinAction;
+    }
+
+    public ThrowAction GetThrowAction()
+    {
+        return throwAction;
     }
 
     public GridPostion GetGridPostion()
@@ -144,4 +151,6 @@ public class Unit : MonoBehaviour
 
         OnAnyUnitDestroyed?.Invoke(this, EventArgs.Empty);
     }
+
+    
 }
