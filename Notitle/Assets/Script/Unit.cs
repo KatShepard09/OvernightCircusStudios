@@ -10,17 +10,20 @@ public class Unit : MonoBehaviour
     public static event EventHandler OnAnyActionPointsChanged;
     public static event EventHandler OnAnyUnitSpawned;
     public static event EventHandler OnAnyUnitDestroyed;
-
+    public static event EventHandler OnUnitDestroyed;
 
     [SerializeField] private bool isEnemy;
-
     private GridPostion gridPostion;
     private HealthSystem healthSystem;
     private MoveAction moveAction;
     private SpinAction spinAction;
     private ThrowAction throwAction;
     private BaseAction[] baseActionArray;
-    private int actionPoints = ACTION_POINTS_MAX;//starting action points.
+    private int actionPoints = ACTION_POINTS_MAX;
+    private PopulationCounter populationCounter;
+
+
+
     private void Awake()
     {
         healthSystem = GetComponent<HealthSystem>();
@@ -28,30 +31,31 @@ public class Unit : MonoBehaviour
         spinAction = GetComponent<SpinAction>();
         throwAction = GetComponent<ThrowAction>();
         baseActionArray = GetComponents<BaseAction>();
+        populationCounter = FindObjectOfType<PopulationCounter>();
     }
-
-
 
     private void Start()
     {
-
-        gridPostion = LevelGrid.Instance.GetGridPostion(transform.position);//tells the grid if a unit is standing on it.
+        gridPostion = LevelGrid.Instance.GetGridPostion(transform.position);
         LevelGrid.Instance.AddUnitGridPostion(gridPostion, this);
 
         TurnSystem.Instance.OnTurnChange += TurnSystem_OnTurnChange;
 
         healthSystem.OnDeath += HealthSystem_OnDeath;
         OnAnyUnitSpawned?.Invoke(this, EventArgs.Empty);
+
+        // Only increase population when a player unit is spawned, not on scene start
+        if (!IsEnemy())
+        {
+            IncreasePopulation();
+        }
     }
 
     private void Update()
     {
-
-
-        GridPostion newGridPostion = LevelGrid.Instance.GetGridPostion(transform.position);// keeps grid updated when a unit moves.
+        GridPostion newGridPostion = LevelGrid.Instance.GetGridPostion(transform.position);
         if (newGridPostion != gridPostion)
         {
-            //unit changed postion.
             LevelGrid.Instance.UnitMovedGridPostion(this, gridPostion, newGridPostion);
             gridPostion = newGridPostion;
         }
@@ -83,13 +87,13 @@ public class Unit : MonoBehaviour
     }
 
     public BaseAction[] GetBaseActionArray()
-    { 
-        return baseActionArray; 
+    {
+        return baseActionArray;
     }
 
-    public bool TrySpendActionPointsToTakeAction(BaseAction baseAction)//checks to see if the player has any action points to spend if so spend an action point.
+    public bool TrySpendActionPointsToTakeAction(BaseAction baseAction)
     {
-        if(CanSpendActionPointsToTakeAction(baseAction))
+        if (CanSpendActionPointsToTakeAction(baseAction))
         {
             SpendActionPoints(baseAction.GetActionCost());
             return true;
@@ -99,9 +103,10 @@ public class Unit : MonoBehaviour
             return false;
         }
     }
-    public bool CanSpendActionPointsToTakeAction(BaseAction baseAction)//spends action points if the player is allowed too.
+
+    public bool CanSpendActionPointsToTakeAction(BaseAction baseAction)
     {
-        if(actionPoints >= baseAction.GetActionCost())
+        if (actionPoints >= baseAction.GetActionCost())
         {
             return true;
         }
@@ -111,30 +116,27 @@ public class Unit : MonoBehaviour
         }
     }
 
-    private void SpendActionPoints(int amount)//keeps track of what action points the player has left.
+    private void SpendActionPoints(int amount)
     {
         actionPoints -= amount;
-
         OnAnyActionPointsChanged?.Invoke(this, EventArgs.Empty);
     }
 
     public int GetActionPoints()
-    { 
-        return actionPoints; 
+    {
+        return actionPoints;
     }
 
     private void TurnSystem_OnTurnChange(object sender, EventArgs e)
     {
-        if((IsEnemy() && !TurnSystem.Instance.IsPlayerTurn()) || (!IsEnemy() && TurnSystem.Instance.IsPlayerTurn()))//checks to see whos turn it is and reset the action points for that turn.
+        if ((IsEnemy() && !TurnSystem.Instance.IsPlayerTurn()) || (!IsEnemy() && TurnSystem.Instance.IsPlayerTurn()))
         {
             actionPoints = ACTION_POINTS_MAX;
-
             OnAnyActionPointsChanged?.Invoke(this, EventArgs.Empty);
         }
-       
     }
 
-    public bool IsEnemy()//checks to see if it is an enemy.
+    public bool IsEnemy()
     {
         return isEnemy;
     }
@@ -147,10 +149,39 @@ public class Unit : MonoBehaviour
     private void HealthSystem_OnDeath(object sender, EventArgs e)
     {
         LevelGrid.Instance.RemoveUnitGridPostion(gridPostion, this);
+        EnemyLootDrop lootDrop = GetComponent<EnemyLootDrop>();
+        if (lootDrop != null)
+        {
+            lootDrop.DropLootAndShowPanel();
+        }
+
         Destroy(gameObject);
 
+        if (!IsEnemy())
+        {
+            DecreasePopulation();
+        }
+
+        OnUnitDestroyed?.Invoke(this, EventArgs.Empty);
+    }
+   
+
+    private void IncreasePopulation()
+    {
+        if (populationCounter != null)
+        {
+            populationCounter.UpdatePopulationText();
+        }
+    }
+
+    private void DecreasePopulation()
+    {
+        if (populationCounter != null)
+        {
+            populationCounter.DecreasePopulation();
+        }
         OnAnyUnitDestroyed?.Invoke(this, EventArgs.Empty);
     }
 
-    
+
 }
