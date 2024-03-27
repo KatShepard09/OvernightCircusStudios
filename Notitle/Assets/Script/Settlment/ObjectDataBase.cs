@@ -7,17 +7,28 @@ using UnityEngine;
 public class ObjectDataBase : ScriptableObject
 {
     public List<ObjectData> objectData;
+
+    public ObjectData GetObjectByID(int id)
+    {
+        return objectData.Find(obj => obj.ID == id);
+    }
 }
 
-[Serializable] 
+[Serializable]
 public class ObjectData
 {
-    [field: SerializeField] public string Name { get; private set; }
+    [SerializeField] public string Name;
+    [SerializeField] public int ID;
+    [SerializeField] public string Description;
+    [SerializeField] public Vector2Int Size;
+    [SerializeField] public GameObject Prefab;
+    [SerializeField] public List<MaterialCost> CraftingCost;
+    [SerializeField] public bool IsUnlocked;
+}
 
-    [field: SerializeField]public int ID {  get; private set; }
-
-    [field: SerializeField] public Vector2Int Size { get; private set; }
-
-    [field: SerializeField] public GameObject Prefab { get; private set; }
-    
+[Serializable]
+public class MaterialCost
+{
+    [SerializeField] public string MaterialName;
+    [SerializeField] public int Amount;
 }

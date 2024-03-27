@@ -17,4 +17,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/TheGame.unity
     guid: 99c9720ab356a0642a771bea13969a05
+  - enabled: 1
+    path: Assets/Scenes/SettlementPhase.unity
+    guid: f29e5ac30b6aab240b0220242099d43e
+  - enabled: 1
+    path: Assets/Scenes/MAP.unity
+    guid: 65d9a060f267ec749b07d593e2941a88
   m_configObjects: {}
