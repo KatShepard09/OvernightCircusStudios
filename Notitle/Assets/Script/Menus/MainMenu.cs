@@ -7,7 +7,7 @@ public class MainMenu : MonoBehaviour
 {
     public void NewGame()
     {
-        SceneManager.LoadScene("TheGame");
+        SceneManager.LoadScene("SettlementPhase");
     }
 
     public void LoadGame()

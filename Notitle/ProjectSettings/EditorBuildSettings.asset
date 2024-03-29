@@ -12,14 +12,17 @@ EditorBuildSettings:
     path: Assets/Scenes/MainMenu.unity
     guid: 2123a45310cc5ad47996b4692e001136
   - enabled: 1
+    path: Assets/Scenes/SettlementPhase.unity
+    guid: f29e5ac30b6aab240b0220242099d43e
+  - enabled: 1
+    path: Assets/Scenes/Tutorial.unity
+    guid: 021749168165ffc4887edb302feed2ea
+  - enabled: 1
     path: Assets/Scenes/Settings.unity
     guid: 574f6968683bb8841ac1c64874d34a31
   - enabled: 1
     path: Assets/Scenes/TheGame.unity
     guid: 99c9720ab356a0642a771bea13969a05
-  - enabled: 1
-    path: Assets/Scenes/SettlementPhase.unity
-    guid: f29e5ac30b6aab240b0220242099d43e
   - enabled: 1
     path: Assets/Scenes/MAP.unity
     guid: 65d9a060f267ec749b07d593e2941a88
