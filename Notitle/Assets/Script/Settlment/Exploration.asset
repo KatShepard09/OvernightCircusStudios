@@ -13,39 +13,39 @@ MonoBehaviour:
   m_Name: Exploration
   m_EditorClassIdentifier: 
   objectData:
-  - Name: Cube
+  - Name: Research Station
     ID: 1
-    Description: Its a cube
+    Description: 
     Size: {x: 0, y: 0}
     Prefab: {fileID: 8453779050258919700, guid: 8d726b5c412a6ab4c82f7f9afad3c768, type: 3}
     CraftingCost:
     - MaterialName: Nap
       Amount: 1
     IsUnlocked: 1
-  - Name: Cylinder
+  - Name: Radio Tower
     ID: 2
     Description: 
     Size: {x: 0, y: 0}
     Prefab: {fileID: 7039068385509299311, guid: 14976455cb099bb438129d66efafb9fb, type: 3}
     CraftingCost:
     - MaterialName: Nap
-      Amount: 1
-    IsUnlocked: 1
-  - Name: Sphere
+      Amount: 3
+    IsUnlocked: 0
+  - Name: Tech Lab
     ID: 3
     Description: 
     Size: {x: 0, y: 0}
     Prefab: {fileID: 4406088033945189808, guid: 7c15bca0f69d8c54db4e303f9e7b0c1d, type: 3}
     CraftingCost:
     - MaterialName: Nap
-      Amount: 1
-    IsUnlocked: 1
-  - Name: 
+      Amount: 6
+    IsUnlocked: 0
+  - Name: Satellite
     ID: 4
     Description: 
     Size: {x: 0, y: 0}
     Prefab: {fileID: 8453779050258919700, guid: 8d726b5c412a6ab4c82f7f9afad3c768, type: 3}
     CraftingCost:
     - MaterialName: Nap
-      Amount: 1
-    IsUnlocked: 1
+      Amount: 10
+    IsUnlocked: 0

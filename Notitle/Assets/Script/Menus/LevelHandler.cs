@@ -9,4 +9,9 @@ public class LevelHandler : MonoBehaviour
     {
         SceneManager.LoadScene("TheGame");
     }
+
+    public void GoToCityLevel1()
+    {
+        SceneManager.LoadScene("Tutorial");
+    }
 }

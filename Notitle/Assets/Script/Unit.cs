@@ -20,9 +20,7 @@ public class Unit : MonoBehaviour
     private ThrowAction throwAction;
     private BaseAction[] baseActionArray;
     private int actionPoints = ACTION_POINTS_MAX;
-    private PopulationCounter populationCounter;
-
-
+    private UnitPopulationUpdater populationUpdater;
 
     private void Awake()
     {
@@ -31,7 +29,7 @@ public class Unit : MonoBehaviour
         spinAction = GetComponent<SpinAction>();
         throwAction = GetComponent<ThrowAction>();
         baseActionArray = GetComponents<BaseAction>();
-        populationCounter = FindObjectOfType<PopulationCounter>();
+        populationUpdater = GetComponent<UnitPopulationUpdater>();
     }
 
     private void Start()
@@ -44,11 +42,6 @@ public class Unit : MonoBehaviour
         healthSystem.OnDeath += HealthSystem_OnDeath;
         OnAnyUnitSpawned?.Invoke(this, EventArgs.Empty);
 
-        // Only increase population when a player unit is spawned, not on scene start
-        if (!IsEnemy())
-        {
-            IncreasePopulation();
-        }
     }
 
     private void Update()
@@ -159,29 +152,10 @@ public class Unit : MonoBehaviour
 
         if (!IsEnemy())
         {
-            DecreasePopulation();
+            Debug.Log("Unit: Sending population update event");
+            UnitPopulationUpdater.Instance?.NotifyUnitDied();
         }
 
         OnUnitDestroyed?.Invoke(this, EventArgs.Empty);
     }
-   
-
-    private void IncreasePopulation()
-    {
-        if (populationCounter != null)
-        {
-            populationCounter.UpdatePopulationText();
-        }
-    }
-
-    private void DecreasePopulation()
-    {
-        if (populationCounter != null)
-        {
-            populationCounter.DecreasePopulation();
-        }
-        OnAnyUnitDestroyed?.Invoke(this, EventArgs.Empty);
-    }
-
-
 }

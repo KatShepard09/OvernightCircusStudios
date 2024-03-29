@@ -13,44 +13,39 @@ MonoBehaviour:
   m_Name: Fights
   m_EditorClassIdentifier: 
   objectData:
-  - Name: mood
+  - Name: Living Commons
     ID: 5
     Description: 
     Size: {x: 0, y: 0}
     Prefab: {fileID: 4406088033945189808, guid: 7c15bca0f69d8c54db4e303f9e7b0c1d, type: 3}
     CraftingCost:
-    - MaterialName: Nap
+    - MaterialName: Scraps
       Amount: 1
     IsUnlocked: 1
-  - Name: loop
+  - Name: Practice Polygon
     ID: 6
     Description: 
     Size: {x: 0, y: 0}
     Prefab: {fileID: 7039068385509299311, guid: 14976455cb099bb438129d66efafb9fb, type: 3}
     CraftingCost:
-    - MaterialName: Nap
-      Amount: 0
-    IsUnlocked: 1
-  - Name: doop
+    - MaterialName: Scraps
+      Amount: 3
+    IsUnlocked: 0
+  - Name: Weapons Lab
     ID: 7
     Description: 
     Size: {x: 0, y: 0}
     Prefab: {fileID: 701258680389580113, guid: 24330f4d50bc1e34eaedccde04cbfc43, type: 3}
-    CraftingCost: []
+    CraftingCost:
+    - MaterialName: Scraps
+      Amount: 6
     IsUnlocked: 0
-  - Name: coop
-    ID: 8
-    Description: 
-    Size: {x: 0, y: 0}
-    Prefab: {fileID: 4406088033945189808, guid: 7c15bca0f69d8c54db4e303f9e7b0c1d, type: 3}
-    CraftingCost: []
-    IsUnlocked: 0
-  - Name: coop
+  - Name: Operations Headquaters
     ID: 8
     Description: 
     Size: {x: 0, y: 0}
     Prefab: {fileID: 4406088033945189808, guid: 7c15bca0f69d8c54db4e303f9e7b0c1d, type: 3}
     CraftingCost:
-    - MaterialName: Nap
-      Amount: 0
+    - MaterialName: Scraps
+      Amount: 10
     IsUnlocked: 0

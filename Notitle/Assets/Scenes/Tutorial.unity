@@ -2538,6 +2538,10 @@ PrefabInstance:
       propertyPath: health
       value: 20
       objectReference: {fileID: 0}
+    - target: {fileID: 7249283146585647522, guid: 0e44023979d5b0f44a22800fe07755c4, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 0ef3de02b82705b4b94d751732d5851e, type: 3}
     - target: {fileID: 7810248710598456104, guid: 0e44023979d5b0f44a22800fe07755c4, type: 3}
       propertyPath: m_LocalScale.x
       value: 0.39640555
@@ -2690,7 +2694,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lootTable:
-  - itemName: Nap
+  - itemName: Scraps
     minAmount: 1
     maxAmount: 3
   lootPanel: {fileID: 1588695422}

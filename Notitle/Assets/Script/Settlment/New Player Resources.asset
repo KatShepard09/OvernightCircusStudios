@@ -14,6 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Resources:
   - Name: Nap
-    Amount: 5
-  - Name: food
-    Amount: 5
+    ID: 0
+    Amount: 0
+  - Name: Scraps
+    ID: 0
+    Amount: 0
