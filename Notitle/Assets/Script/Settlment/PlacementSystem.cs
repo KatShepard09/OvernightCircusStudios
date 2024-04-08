@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class PlacementSystem : MonoBehaviour
 {
+    [SerializeField] private AudioSource placeSound;
     [SerializeField] private GameObject mouseIndicator, cellIndicator;
     [SerializeField] private InputManager inputManager;
     [SerializeField] private Grid grid;
@@ -45,6 +46,7 @@ public class PlacementSystem : MonoBehaviour
         Vector3Int gridPostion = grid.WorldToCell(mousePostion);
         GameObject newObject = Instantiate(dataBase.objectData[selectedObjectIndex].Prefab);
         newObject.transform.position = grid.CellToWorld(gridPostion);
+        placeSound.Play();
     }
 
     private void StopPlacment()

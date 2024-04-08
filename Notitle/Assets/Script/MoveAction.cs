@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class MoveAction : BaseAction
 {
+    [SerializeField] private AudioSource footsteps;
 
     public event EventHandler OnStartMoving;
     public event EventHandler OnStopMoving;
@@ -42,6 +43,7 @@ public class MoveAction : BaseAction
             
 
             OnStopMoving?.Invoke(this, EventArgs.Empty);
+            footsteps.Stop();
             ActionComplete();
         }
         float rotateSpeed = 10f;
@@ -55,7 +57,8 @@ public class MoveAction : BaseAction
         this.targetPosition = LevelGrid.Instance.GetWorldPostion(gridPostion);
 
         OnStartMoving?.Invoke(this, EventArgs.Empty);
-       
+
+        footsteps.Play();
     }
 
    

@@ -6,6 +6,8 @@ using TMPro;
 
 public class ActionButtonUi : MonoBehaviour
 {
+    [SerializeField] private AudioSource buttonClickSound;
+
     [SerializeField] private TextMeshProUGUI textMeshPro;
     [SerializeField] private Button button;
     [SerializeField] private GameObject selectedGameObject;
@@ -19,6 +21,7 @@ public class ActionButtonUi : MonoBehaviour
         button.onClick.AddListener(() =>
         {
             CharacterActionSystem.Instance.SetSelectedAction(baseAction);//allows buttons to be clicked
+            buttonClickSound.Play();
         });
     }
 
