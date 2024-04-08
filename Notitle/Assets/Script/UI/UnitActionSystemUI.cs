@@ -9,7 +9,7 @@ using UnityEngine.UI;
 public class UnitActionSystemUI : MonoBehaviour
 {
 
-    [SerializeField] private Transform actionButtonPrefab;
+    [SerializeField] private Transform actionButtonPrefabe;
     [SerializeField] private Transform actionButtonContainerTransform;
     [SerializeField] private TextMeshProUGUI actionPointsText;
 
