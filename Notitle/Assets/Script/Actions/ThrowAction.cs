@@ -6,6 +6,8 @@ using UnityEngine.EventSystems;
 
 public class ThrowAction : BaseAction
 {
+    [SerializeField] private AudioSource hit;
+    [SerializeField] private AudioSource miss;
 
     private enum State
     {
@@ -94,6 +96,7 @@ public class ThrowAction : BaseAction
     {
         OnThrow?.Invoke(this, EventArgs.Empty);
         targetUnit.Damage(40);
+        hit.Play();
     }
     public override string GetActionName()//creates Throw button.
     {
