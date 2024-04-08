@@ -8,6 +8,8 @@ using UnityEngine.UI;
 
 public class TurnSystemUI : MonoBehaviour
 {
+    [SerializeField] private AudioSource buttonClick;
+
     [SerializeField] private Button endTurnBtn;
     [SerializeField] private TextMeshProUGUI turnNumberText;
 
@@ -15,6 +17,7 @@ public class TurnSystemUI : MonoBehaviour
     {
         endTurnBtn.onClick.AddListener(() =>
         {
+            buttonClick.Play();
             TurnSystem.Instance.NextTurn();
         });
 
