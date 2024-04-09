@@ -7,7 +7,7 @@ public class HealthSystem : MonoBehaviour
 {
     public event EventHandler OnDeath;
 
-    [SerializeField]private int health = 100;
+    [SerializeField]public int health = 100;
 
     public void Damage(int damageAmount)
     {

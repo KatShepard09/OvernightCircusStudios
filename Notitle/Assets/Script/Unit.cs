@@ -21,6 +21,9 @@ public class Unit : MonoBehaviour
     private BaseAction[] baseActionArray;
     private int actionPoints = ACTION_POINTS_MAX;
     private UnitPopulationUpdater populationUpdater;
+    [SerializeField] private Sprite unitSprite; // Sprite for this unit
+   
+
 
     private void Awake()
     {
@@ -52,6 +55,11 @@ public class Unit : MonoBehaviour
             LevelGrid.Instance.UnitMovedGridPostion(this, gridPostion, newGridPostion);
             gridPostion = newGridPostion;
         }
+    }
+
+    public Sprite GetUnitSprite()
+    {
+        return unitSprite;
     }
 
     public MoveAction GetMoveAction()
@@ -137,6 +145,19 @@ public class Unit : MonoBehaviour
     public void Damage(int damageAmount)
     {
         healthSystem.Damage(damageAmount);
+    }
+
+    public int GetHealth()
+    {
+        if (healthSystem != null)
+        {
+            return healthSystem.health;
+        }
+        else
+        {
+            Debug.LogWarning("HealthSystem component not found for " + name);
+            return 0;
+        }
     }
 
     private void HealthSystem_OnDeath(object sender, EventArgs e)
